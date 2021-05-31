@@ -1,0 +1,120 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: $bgcolor;
+  .main-title {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-family: $font-family_1;
+    color: $color_1;
+    font-size: 80px;
+  }
+  .instruction {
+    font-family: $font-family_2;
+    color: $color_2;
+    text-align: center;
+    font-size: 24px;
+    .info-name {
+      font-size: 30px;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+  .options-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .opponent {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      .icon {
+        flex-basis: 45%;
+        @include icon;
+      }
+      &__description {
+        font-family: $font-family_2;
+        color: $color_1;
+        font-size: 13px;
+      }
+    }
+    .inputs-wrapper {
+      position: absolute;
+      top: 50px;
+      transform: scale(0);
+      transition: .4s;
+      .input-group {
+        .input-error {
+          font-family: $font-family_2;
+          font-size: 13px;
+          color: $color_1;
+          margin-bottom: 5px;
+          margin-left: 5px;
+          transition: .4s;
+        }
+        .name-1-input_error {
+          transform: scale(0);
+        }
+        .name-2-input_error {
+          transform: scale(0);
+        }
+        .input-name {
+          background-color: lighten($bgcolor, 10%);
+          padding: 0 7px;
+          font-family: $font-family_1;
+          color: $color_3;
+          letter-spacing: 1.5px;
+          font-size: 40px;
+          text-transform: uppercase;
+          &:focus {
+            outline: none;
+          }
+        }
+        .fa-check {
+          @include icon;
+          margin-top: 30px;
+          width: 100%;
+          text-align: center;
+        }
+      }
+      .input_2-group {
+        display: none;
+      }
+    }
+  }
+
+  .icons-wrapper {
+    display: none;
+    justify-content: space-evenly;
+    align-items: center;
+    .fa-circle, .fa-times, .fa-question {
+      @include icon;
+    }
+  }
+
+  .board {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    width: 280px;
+    height: 280px;
+    margin: 30px auto;
+    background-color: lighten($color: $bgcolor, $amount: 10%);
+    border: 1px double $color_1;
+    .square {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $color_1;
+      font-size: 30px;
+      flex-basis: 33%;
+      border: 1px solid $color_1;
+    }
+  }
+}

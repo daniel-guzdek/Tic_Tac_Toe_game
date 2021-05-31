@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&family=Monofett&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="css/style.css">
+  <title>Tic Tac Toe</title>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="start-panel">
+      <h1 class="main-title">Tic Tac Toe</h1>
+      <p class="instruction">Choose opponent</p>
+      <div class="options-wrapper">
+        <div class="opponent">
+          <i class="far fa-user icon"></i>
+          <p class="opponent__description">Second Player</p>
+        </div>
+        <div class="opponent">
+          <i class="fas fa-robot icon"></i>
+          <p class="opponent__description">Computer</p>
+        </div>
+        <div class="inputs-wrapper">
+          <div class="input_1-group input-group">
+            <p class="name-1-input_error input-error">Please write your name</p>
+            <input type="text" class="player_1-name input-name" name="player_1-name" autocomplete="off"><i class="fas fa-check icon check-name_1"></i>
+          </div>
+          <div class="input_2-group input-group">
+            <p class="name-2-input_error input-error">Please write your name</p>
+            <input type="text" class="player_2-name input-name" name="player_2-name" autocomplete="off"><i class="fas fa-check icon check-name_2"></i>
+          </div>
+        </div>
+      </div>
+      <div class="icons-wrapper">
+        <i class="far fa-circle icon option-circle"></i>
+        <i class="fas fa-times icon option-times"></i>
+        <i class="fas fa-question icon option-random"></i>
+      </div>
+      <div class="board">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+      </div>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

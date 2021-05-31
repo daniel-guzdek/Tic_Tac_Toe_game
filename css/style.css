@@ -1,0 +1,217 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #242424;
+}
+
+.wrapper .main-title {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-family: "Monofett", cursive;
+  color: #fbdb49;
+  font-size: 80px;
+}
+
+.wrapper .instruction {
+  font-family: "IBM Plex Mono", monospace;
+  color: coral;
+  text-align: center;
+  font-size: 24px;
+}
+
+.wrapper .instruction .info-name {
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.wrapper .options-wrapper {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.wrapper .options-wrapper .opponent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+.wrapper .options-wrapper .opponent .icon {
+  -ms-flex-preferred-size: 45%;
+      flex-basis: 45%;
+  font-size: 50px;
+  margin: 50px 0;
+  color: #fff3b0;
+  cursor: pointer;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.wrapper .options-wrapper .opponent .icon:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  color: #fbdb49;
+}
+
+.wrapper .options-wrapper .opponent__description {
+  font-family: "IBM Plex Mono", monospace;
+  color: #fbdb49;
+  font-size: 13px;
+}
+
+.wrapper .options-wrapper .inputs-wrapper {
+  position: absolute;
+  top: 50px;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.wrapper .options-wrapper .inputs-wrapper .input-group .input-error {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  color: #fbdb49;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.wrapper .options-wrapper .inputs-wrapper .input-group .name-1-input_error {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+
+.wrapper .options-wrapper .inputs-wrapper .input-group .name-2-input_error {
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
+
+.wrapper .options-wrapper .inputs-wrapper .input-group .input-name {
+  background-color: #3e3e3e;
+  padding: 0 7px;
+  font-family: "Monofett", cursive;
+  color: #fff3b0;
+  letter-spacing: 1.5px;
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+.wrapper .options-wrapper .inputs-wrapper .input-group .input-name:focus {
+  outline: none;
+}
+
+.wrapper .options-wrapper .inputs-wrapper .input-group .fa-check {
+  font-size: 50px;
+  margin: 50px 0;
+  color: #fff3b0;
+  cursor: pointer;
+  -webkit-transition: .4s;
+  transition: .4s;
+  margin-top: 30px;
+  width: 100%;
+  text-align: center;
+}
+
+.wrapper .options-wrapper .inputs-wrapper .input-group .fa-check:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  color: #fbdb49;
+}
+
+.wrapper .options-wrapper .inputs-wrapper .input_2-group {
+  display: none;
+}
+
+.wrapper .icons-wrapper {
+  display: none;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.wrapper .icons-wrapper .fa-circle, .wrapper .icons-wrapper .fa-times, .wrapper .icons-wrapper .fa-question {
+  font-size: 50px;
+  margin: 50px 0;
+  color: #fff3b0;
+  cursor: pointer;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.wrapper .icons-wrapper .fa-circle:hover, .wrapper .icons-wrapper .fa-times:hover, .wrapper .icons-wrapper .fa-question:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+  color: #fbdb49;
+}
+
+.wrapper .board {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+  -ms-grid-rows: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+  width: 280px;
+  height: 280px;
+  margin: 30px auto;
+  background-color: #3e3e3e;
+  border: 1px double #fbdb49;
+}
+
+.wrapper .board .square {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #fbdb49;
+  font-size: 30px;
+  -ms-flex-preferred-size: 33%;
+      flex-basis: 33%;
+  border: 1px solid #fbdb49;
+}
+/*# sourceMappingURL=style.css.map */
