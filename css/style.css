@@ -57,6 +57,7 @@ body {
   font-size: 30px;
   font-weight: bold;
   text-decoration: underline;
+  text-transform: uppercase;
 }
 
 .wrapper .options-wrapper {
@@ -217,7 +218,7 @@ body {
   height: 280px;
   margin: 30px auto;
   background-color: #3e3e3e;
-  border: 1px double #fbdb49;
+  border: 1px double #fff3b0;
 }
 
 .wrapper .board .bgc-disabled {
@@ -242,10 +243,10 @@ body {
   font-size: 30px;
   -ms-flex-preferred-size: 33%;
       flex-basis: 33%;
-  border: 1px solid #fbdb49;
+  border: 1px solid #fff3b0;
 }
 
-.wrapper .reset {
+.wrapper .reset, .wrapper .reset__ai-game {
   position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -263,12 +264,12 @@ body {
   transition: .4s;
 }
 
-.wrapper .reset .reset-option {
+.wrapper .reset .reset-option, .wrapper .reset__ai-game .reset-option {
   -ms-flex-preferred-size: 30%;
       flex-basis: 30%;
 }
 
-.wrapper .reset .reset-option .icon {
+.wrapper .reset .reset-option .icon, .wrapper .reset__ai-game .reset-option .icon {
   font-size: 50px;
   margin: 50px 0;
   color: #fff3b0;
@@ -282,20 +283,24 @@ body {
   margin-top: 20px;
 }
 
-.wrapper .reset .reset-option .icon:hover {
+.wrapper .reset .reset-option .icon:hover, .wrapper .reset__ai-game .reset-option .icon:hover {
   -webkit-transform: scale(1.1);
           transform: scale(1.1);
   color: #fbdb49;
 }
 
-.wrapper .reset .reset-option .reset-icon__description {
+.wrapper .reset .reset-option .reset-icon__description, .wrapper .reset__ai-game .reset-option .reset-icon__description {
   font-family: "IBM Plex Mono", monospace;
   color: #fbdb49;
   font-size: 13px;
   text-align: center;
 }
 
-.reset.active {
+.wrapper .reset__ai-game {
+  top: 50%;
+}
+
+.reset.active, .reset__ai-game.active {
   right: 30px;
 }
 /*# sourceMappingURL=style.css.map */

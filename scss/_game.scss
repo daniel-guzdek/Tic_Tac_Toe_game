@@ -29,6 +29,7 @@
       font-size: 30px;
       font-weight: bold;
       text-decoration: underline;
+      text-transform: uppercase;
     }
   }
   .options-wrapper {
@@ -118,7 +119,7 @@
     height: 280px;
     margin: 30px auto;
     background-color: lighten($color: $bgcolor, $amount: 10%);
-    border: 1px double $color_1;
+    border: 1px double $color_3;
     .bgc-disabled {
       display: none;
       position: absolute;
@@ -133,10 +134,10 @@
       color: $color_1;
       font-size: 30px;
       flex-basis: 33%;
-      border: 1px solid $color_1;
+      border: 1px solid $color_3;
     }
   }
-  .reset {
+  .reset, .reset__ai-game {
     position: absolute;
     display: flex;
     top: calc(50% - 150px);
@@ -162,8 +163,11 @@
       }
     } 
   }
+  .reset__ai-game {
+    top: 50%;
+  }
 }
 
-.reset.active {
+.reset.active, .reset__ai-game.active {
   right: 30px;
 }
