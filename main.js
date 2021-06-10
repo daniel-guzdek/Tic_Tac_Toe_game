@@ -38,17 +38,17 @@ const sq_9 = document.querySelector('.sq_9');
 
 const squaresArray = [sq_1, sq_2, sq_3, sq_4, sq_5, sq_6, sq_7, sq_8, sq_9];
 let humanPlayerSignIndexesArray = [];
+let aiSignIndexesArray = [];
 
 // aside panel with options after game with other human player
 const resetOptionsPanel = document.querySelector('.reset');
 const playAgainOptionIcon = document.querySelector('.reset__option-1');
 const changeNamesOptionIcon = document.querySelector('.reset__option-2');
-const playWithComputerOptionIcon = document.querySelector('.reset__option-3');
+const backToMainMenuIcons = document.querySelectorAll('.reset__option-3');
 
 // aside panel with options after game with AI
 const resetOptionsPanelAfterGameWithAI = document.querySelector('.reset__ai-game');
 const playAgainWithAIOptionIcon = document.querySelector('.reset__ai-game-option-1');
-const playWithHumanOptionIcon = document.querySelector('.reset__ai-game-option-2');
 
 const gameInfo = {
   opponentIsHuman: '',
@@ -59,6 +59,7 @@ const gameInfo = {
   aiOption: '',
   nextOption: true,
   turn: 0,
+  dangerForAI: false,
   isWinner: false,
 }
 
@@ -236,22 +237,153 @@ function moveAIXTurn4() {
   }
 }
 
+function checkBoardAndFillHumanIndexesArray() {
+  humanPlayerSignIndexesArray = [];
+
+  if(boardAreas[0][0] === 1) {
+     humanPlayerSignIndexesArray.push(0);
+  } if(boardAreas[0][1] === 1) {
+    humanPlayerSignIndexesArray.push(1);
+  } if(boardAreas[0][2] === 1) {
+    humanPlayerSignIndexesArray.push(2);
+  } if(boardAreas[1][0] === 1) {
+    humanPlayerSignIndexesArray.push(3);
+  } if(boardAreas[1][1] === 1) {
+    humanPlayerSignIndexesArray.push(4);
+  } if(boardAreas[1][2] === 1) {
+    humanPlayerSignIndexesArray.push(5);
+  } if(boardAreas[2][0] === 1) {
+    humanPlayerSignIndexesArray.push(6);
+  } if(boardAreas[2][1] === 1) {
+    humanPlayerSignIndexesArray.push(7);
+  } if(boardAreas[2][2] === 1) {
+    humanPlayerSignIndexesArray.push(8);
+  }
+
+  // sort this values (b - a)
+  humanPlayerSignIndexesArray.sort((a, b) => {
+    return b - a;
+  })
+}
+
+function checkBoardAndFillAiIndexesArray() {
+  aiSignIndexesArray = [];
+
+  if(boardAreas[0][0] === 0) {
+    aiSignIndexesArray.push(0);
+  } if(boardAreas[0][1] === 0) {
+    aiSignIndexesArray.push(1);
+  } if(boardAreas[0][2] === 0) {
+    aiSignIndexesArray.push(2);
+  } if(boardAreas[1][0] === 0) {
+    aiSignIndexesArray.push(3);
+  } if(boardAreas[1][1] === 0) {
+    aiSignIndexesArray.push(4);
+  } if(boardAreas[1][2] === 0) {
+    aiSignIndexesArray.push(5);
+  } if(boardAreas[2][0] === 0) {
+    aiSignIndexesArray.push(6);
+  } if(boardAreas[2][1] === 0) {
+    aiSignIndexesArray.push(7);
+  } if(boardAreas[2][2] === 0) {
+    aiSignIndexesArray.push(8);
+  }
+
+  // sort this values (b - a)
+  aiSignIndexesArray.sort((a, b) => {
+    return b - a;
+  })
+}
+
+function checkDangerForAIXIn3Turn() {
+  // poziomo
+  if((humanPlayerSignIndexesArray[0] === 8 && humanPlayerSignIndexesArray[1] === 6) && sq_8.innerHTML === '') {
+    gameInfo.dangerForAI = true;
+  } 
+  else if(((humanPlayerSignIndexesArray[0] === 2 || humanPlayerSignIndexesArray[1] === 2) && (humanPlayerSignIndexesArray[1] === 0 || humanPlayerSignIndexesArray[2] === 0)) && sq_2.innerHTML === '') {
+    gameInfo.dangerForAI = true;
+  }
+}
+
+function cancelDangerForAIXIn3Turn() {
+  // dla sytuacji gdy kółko jest np. na polu 1 i 3 a pole 2 jest puste i mamy ruch AI
+  console.log("DANGER for AI-X !!!");
+  // poziomo
+  if((humanPlayerSignIndexesArray[0] === 8 && humanPlayerSignIndexesArray[1] === 6) && sq_8.innerHTML === '') {
+    sq_8.innerHTML = timesSign;
+    boardAreas[2][1] = 0;
+    check();
+    return;
+  } 
+  if(((humanPlayerSignIndexesArray[0] === 2 || humanPlayerSignIndexesArray[1] === 2) && (humanPlayerSignIndexesArray[1] === 0 || humanPlayerSignIndexesArray[2] === 0)) && sq_2.innerHTML === '') {
+    sq_2.innerHTML = timesSign;
+    boardAreas[0][1] = 0;
+    check();
+    return;
+  }
+  // pionowo
+  if((humanPlayerSignIndexesArray[0] === 8 && (humanPlayerSignIndexesArray[1] === 2 || humanPlayerSignIndexesArray[2] === 2)) && sq_6.innerHTML === '') {
+    sq_6.innerHTML = timesSign;
+    boardAreas[1][2] = 0;
+    check();
+    return;
+  } 
+  if(((humanPlayerSignIndexesArray[0] === 6 || humanPlayerSignIndexesArray[1] === 6) && (humanPlayerSignIndexesArray[1] === 0 || humanPlayerSignIndexesArray[2] === 0)) && sq_4.innerHTML === '') {
+    sq_4.innerHTML = timesSign;
+    boardAreas[1][0] = 0;
+    check();
+    return;
+  } 
+  // dla diagonali nie musimy sprawdzać, bo w 2 turze komp i tak zajmuje środek (pole 5) jeśli gracz nie zajął
+  else {
+    console.log("NO DANGER 33333333")
+    return;
+  }
+  // gameInfo.nextOption = !gameInfo.nextOption
+}
+
 function moveAIXTurn6() {
-  
     console.log("HURAAAAAAAAAAAAAAAA")
 
-  // humanPlayerSignIndexesArray = [];
+  checkBoardAndFillHumanIndexesArray();
+  checkBoardAndFillAiIndexesArray();
+  console.log("human indexes: " + humanPlayerSignIndexesArray);
+  console.log("ai indexes: " + aiSignIndexesArray);
 
-  // squaresArray.forEach(sq => {
-  //   if((sq.innerHTML === `<i class="far fa-circle icon option-circle"></i>`) && gameInfo.turn === 5) {
-  //     console.log(squaresArray.indexOf(sq)) // DZIAŁA !!!! :)
-  //     const indexOfHumanSign = squaresArray.indexOf(sq);
-  //     humanPlayerSignIndexesArray.push(indexOfHumanSign);
-  //   } 
-  // })
+  // tutaj powinny być napisane warunki, żeby uruchomić funkcję cancelDangerForAIXIn3Turn lub jej nie uruchamiać
 
-  // difference już tutaj nie zadziała
+  // cancelDangerForAIXIn3Turn();
+  // dla sytuacji gdy kółko jest np. na polu 1 i 3 a pole 2 jest puste i mamy ruch AI
 
+  // SPRAWDZENIE DLA PUSTYCH PÓL POMIĘDZY
+  // poziomo
+  if((humanPlayerSignIndexesArray[0] === 8 && humanPlayerSignIndexesArray[1] === 6) && sq_8.innerHTML === '') {
+    sq_8.innerHTML = timesSign;
+    boardAreas[2][1] = 0;
+    check();
+    return;
+  } 
+  if(((humanPlayerSignIndexesArray[0] === 2 || humanPlayerSignIndexesArray[1] === 2) && (humanPlayerSignIndexesArray[1] === 0 || humanPlayerSignIndexesArray[2] === 0)) && sq_2.innerHTML === '') {
+    sq_2.innerHTML = timesSign;
+    boardAreas[0][1] = 0;
+    check();
+    return;
+  }
+  // pionowo
+  if((humanPlayerSignIndexesArray[0] === 8 && (humanPlayerSignIndexesArray[1] === 2 || humanPlayerSignIndexesArray[2] === 2)) && sq_6.innerHTML === '') {
+    sq_6.innerHTML = timesSign;
+    boardAreas[1][2] = 0;
+    check();
+    return;
+  } 
+  if(((humanPlayerSignIndexesArray[0] === 6 || humanPlayerSignIndexesArray[1] === 6) && (humanPlayerSignIndexesArray[1] === 0 || humanPlayerSignIndexesArray[2] === 0)) && sq_4.innerHTML === '') {
+    sq_4.innerHTML = timesSign;
+    boardAreas[1][0] = 0;
+    check();
+    return;
+  } 
+
+  
   // 0. jeśli komp ma już dwa krzyżyki po diagonalu lun indeksy dwóch obok siebie i ma turę i wolne miejsce, to niech postawi trzeci krzyżyk i wygra
 
   // 1. tutaj trzeba już sprawdzać czy te 3 liczby (3 Kółka) w tablicy mają indeksy obok siebie np. 4, 0, 1. Jeśli tak to postawić tam krzyżyk, który przeszkodzi wygranej. 
@@ -259,16 +391,146 @@ function moveAIXTurn6() {
   // 2. A jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu.
 
 
-  // obok siebie wertykalnie - różnica 1
-  // if((Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[1]) === 1) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[1]) === 1) || (Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[2]) === 1)) {
-  //   console.log("GGGGGGGGGGGGGGGGG")
+  // obok siebie poziomo - różnica 1
+  if(((Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[1]) === 1) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[1]) === 1)) || (Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[2]) === 1)) {
+    console.log("POZIOMO");
+
+    // !!!!! jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu i WYGRAĆ !!!!
+    // ta funkcja powinna znaleźć się zaraz na początku TUTAJ !!!!
+
+    //ogólnie jeśli nie ma zagrożenia to trzeba coś zrobić innego z krzyżykiem
+    if(humanPlayerSignIndexesArray[1] === 1 && sq_1.innerHTML === '') {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+      return;
+    } if(humanPlayerSignIndexesArray[1] === 2) {
+      // ten warunek jest z dupy bo kółka są na 3 i 4
+    } if((humanPlayerSignIndexesArray[1] === 3 || (humanPlayerSignIndexesArray[2] === 3 && humanPlayerSignIndexesArray[1] === 4)) && sq_6.innerHTML === '') {
+      sq_6.innerHTML = timesSign;
+      boardAreas[1][2] = 0;
+      return;
+    } if(((humanPlayerSignIndexesArray[1] === 4 && sq_4.innerHTML === '') || (humanPlayerSignIndexesArray[2] === 4 && humanPlayerSignIndexesArray[1] === 5)) && sq_4.innerHTML === '') {
+      sq_4.innerHTML = timesSign;
+      boardAreas[1][0] = 0;
+      return;
+    } if(humanPlayerSignIndexesArray[1] === 5 && sq_4.innerHTML === '') {
+      // ten warunek jest z dupy bo kółka są na 6 i 7
+      return;
+    } if(humanPlayerSignIndexesArray[1] === 6 && sq_9.innerHTML === '') {
+      sq_9.innerHTML = timesSign;
+      boardAreas[2][2] = 0;
+      return;
+    } if(humanPlayerSignIndexesArray[1] === 7 && sq_7.innerHTML === '') {
+      sq_7.innerHTML = timesSign;
+      boardAreas[2][0] = 0;
+      return;
+    } if((humanPlayerSignIndexesArray[0] === 7 && humanPlayerSignIndexesArray[2] === 4) && sq_3.innerHTML === '') {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+      return;
+    } if((humanPlayerSignIndexesArray[0] === 8 && boardAreas[1][1] === 1) && sq_2.innerHTML === '') {
+      if(sq_2.innerHTML === '') {
+        sq_2.innerHTML = timesSign;
+        boardAreas[0][1] = 0;
+        return;
+      } else {
+        sq_3.innerHTML = timesSign;
+        boardAreas[0][2] = 0;
+        return;
+      }
+    } 
+    check();
+  }
+
+  // pionowo
+  if(((Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[1]) === 3) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[1]) === 3)) || (Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[2]) === 3)) {
+
+    console.log("PIONOWO");
+
+    // !!!!! jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu i WYGRAĆ !!!!
+    // ta funkcja powinna znaleźć się zaraz na początku TUTAJ !!!!
+
+    // sprawdzamy tylko drugi element tablicy np. pole 4. Skoro jest drugie to znaczy, że pierwsze jest pole 7, bo sortowaliśmy tablicę i można zablokować pole sq_2.
+    if(((humanPlayerSignIndexesArray[1] === 3 || (humanPlayerSignIndexesArray[2] === 3 && humanPlayerSignIndexesArray[0] === 6)) || (humanPlayerSignIndexesArray[2] === 3 && humanPlayerSignIndexesArray[1] === 6)) && sq_1.innerHTML === '') {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+      return;
+    }
+     if(((humanPlayerSignIndexesArray[0] === 4 || humanPlayerSignIndexesArray[1] === 4) && (humanPlayerSignIndexesArray[0] > 4 || (aiSignIndexesArray[0] === 3 || aiSignIndexesArray[1] === 3 || aiSignIndexesArray[2] === 3))) && sq_8.innerHTML === '') {
+      sq_8.innerHTML = timesSign;
+      boardAreas[2][1] = 0;
+      return;
+    }
     
-  //   // i jeśli postawiony tam krzyżyk nie istnieje (czyli nie był dany wcześniej)
-  // }
+    if(((humanPlayerSignIndexesArray[2] === 4 || humanPlayerSignIndexesArray[1] === 4) && (humanPlayerSignIndexesArray[1] === 7 || humanPlayerSignIndexesArray[0] === 7))  && sq_2.innerHTML === '') {
+      sq_2.innerHTML = timesSign;
+      boardAreas[0][1] = 0;
+      return;
+    }
+    if(((humanPlayerSignIndexesArray[0] === 4 && humanPlayerSignIndexesArray[1] === 1) && sq_8.innerHTML === '')) {
+      sq_8.innerHTML = timesSign;
+      boardAreas[0][1] = 0;
+      return;
+    }
+    if((((humanPlayerSignIndexesArray[1] === 5 || humanPlayerSignIndexesArray[2] === 5 || humanPlayerSignIndexesArray[0] === 5) && humanPlayerSignIndexesArray[0] === 8)) && sq_3.innerHTML === '') {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+      return;
+    } if((((humanPlayerSignIndexesArray[0] === 5 || humanPlayerSignIndexesArray[1] === 5) && (humanPlayerSignIndexesArray[1] === 2 || humanPlayerSignIndexesArray[2] === 2))) && sq_9.innerHTML === '') {
+      sq_9.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+      return;
+    }
+    check();
+  }
+
+  // // skos 7, 5, 3
+  if((Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[1]) === 2) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[1]) === 2) || (Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[2]) === 2)) {
+
+    console.log("SKOS 7, 5, 3");
+
+    // !!!!! jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu i WYGRAĆ !!!!
+    //   ta funkcja powinna znaleźć się zaraz na początku TUTAJ !!!!
+
+    if(((humanPlayerSignIndexesArray[0] === 4 || humanPlayerSignIndexesArray[1] === 4 || humanPlayerSignIndexesArray[2] === 4) && (humanPlayerSignIndexesArray[0] === 6 || humanPlayerSignIndexesArray[1] === 6)) && sq_3.innerHTML === '') {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+      return;
+    }
+    if(humanPlayerSignIndexesArray[1] === 4 && sq_3.innerHTML === '') {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+      return;
+    }
+    if(((humanPlayerSignIndexesArray[0] === 4 || humanPlayerSignIndexesArray[1] === 4) && (humanPlayerSignIndexesArray[1] === 2 || humanPlayerSignIndexesArray[2] === 2)) && sq_7.innerHTML === '') {
+      sq_7.innerHTML = timesSign;
+      boardAreas[2][0] = 0;
+      return;
+    }
+    check();
+  }
+
+  // // skos 1, 5, 9
+  if(((Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[1]) === 4) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[1]) === 4)) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[0]) === 4)) {
+
+    console.log('skos 1, 5, 9');
+  // !!!!! jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu i WYGRAĆ !!!!
+  // ta funkcja powinna znaleźć się zaraz na początku TUTAJ !!!!
+
+    if(humanPlayerSignIndexesArray[1] === 4 && sq_1.innerHTML === '') {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+      check();
+      return;
+    } else {
+      sq_9.innerHTML = timesSign;
+      boardAreas[2][2] = 0;
+      check();
+      return;
+    }
+  }
   
   console.log(boardAreas);
-  
-  
 }
 
 function moveAIXTurn2() {
@@ -291,7 +553,6 @@ function moveAIXTurn2() {
       gameInfo.turn++;
       bgcDisabled.style.display = 'none';
       check();
-      // checkPositions();
       }, 500)
     } else {
       setTimeout(() => {
@@ -301,7 +562,6 @@ function moveAIXTurn2() {
         gameInfo.turn++;
         bgcDisabled.style.display = 'none';
         check();
-        // checkPositions();
       }, 500);
     }
   }
@@ -341,7 +601,7 @@ function playWithAI() {
           square.innerHTML = `<i class="far fa-circle icon option-circle"></i>`;
           instruction.innerHTML = `<p><span class="info-name">AI's</span> turn:</p>`;
           gameInfo.turn++;
-          check();
+          
 
           moveAIXTurn2();
           if(gameInfo.turn === 3) {
@@ -351,11 +611,23 @@ function playWithAI() {
           else if(gameInfo.turn === 4) {
             gameInfo.turn++; // turn 5
             moveAIXTurn6();
+            
           }
-          
+          else if(gameInfo.turn === 6) {
+            gameInfo.turn++;
+            moveAIXTurn6();
+          }
+          else if(gameInfo.turn === 8) {
+            gameInfo.turn++;
+            moveAIXTurn6();
+          }
+          check();
           
           
           showGameInfo();
+          console.log(boardAreas[0]);
+          console.log(boardAreas[1]);
+          console.log(boardAreas[2]);
         }
         // jeśli player ma krzyżyk i AI ma kółko i WŁAŚNIE KLIKA  PLAYER!!!!!!!!
         else if(gameInfo.firstPlayerOption === false) {
@@ -580,13 +852,16 @@ function playRandomSignWithOpponent() {
 }
 
 function resetGameInfo() {
-  gameInfo.opponentIsHuman = true;
+  gameInfo.opponentIsHuman = '';
   gameInfo.firstPlayerName = '';
   gameInfo.secondPlayerName = '';
   gameInfo.firstPlayerOption = '';
   gameInfo.secondPlayerOption = '';
   gameInfo.nextOption = true;
   gameInfo.turn = 0;
+
+  humanPlayerSignIndexesArray = [];
+  aiSignIndexesArray = [];
 
   resetOptionsPanel.classList.remove('active');
   resetOptionsPanelAfterGameWithAI.classList.remove('active');
@@ -681,6 +956,7 @@ function playAgainTheSameGameWithSecondPlayer() {
 
 function changeNamesChooseSignAndPlayWithSecondPlayer() {
   resetGameInfo();
+  gameInfo.opponentIsHuman = true;
   optionsPanel.style.display = 'flex';
   inputsWrapper.style.display = 'block';
   inputsWrapper.style.transform = 'scale(1)';
@@ -689,8 +965,15 @@ function changeNamesChooseSignAndPlayWithSecondPlayer() {
   showOptionsAndInterfaceForTwoPlayers();
 }
 
+// aside panels after game with second player && after game with AI
 playAgainOptionIcon.addEventListener('click', playAgainTheSameGameWithSecondPlayer);
 changeNamesOptionIcon.addEventListener('click', changeNamesChooseSignAndPlayWithSecondPlayer);
-playWithComputerOptionIcon.addEventListener('click', showOptionsAndInterfaceForGameWithAi);
 playAgainWithAIOptionIcon.addEventListener('click', showOptionsAndInterfaceForGameWithAi);
-playWithHumanOptionIcon.addEventListener('click', changeNamesChooseSignAndPlayWithSecondPlayer);
+
+function backToMainMenuFunction() {
+  location.reload(true);
+}
+
+backToMainMenuIcons.forEach(icon => {
+  icon.addEventListener('click', backToMainMenuFunction);
+})
