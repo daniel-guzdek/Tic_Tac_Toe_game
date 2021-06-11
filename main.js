@@ -23,7 +23,7 @@ const board = document.querySelector('.board');
 const bgcDisabled = document.querySelector('.bgc-disabled');
 const squares = document.querySelectorAll('.square');
 
-const circleSign = `<i class="fas fa-times icon option-circle"></i>`;
+const circleSign = `<i class="far fa-circle icon option-circle"></i>`;
 const timesSign = `<i class="fas fa-times icon option-times"></i>`;
 
 const sq_1 = document.querySelector('.sq_1');
@@ -125,6 +125,105 @@ function fillBoardAreasAfterAIMovement(randomIndexOfSquare) {
   }
 }
 
+function bestMoveAi() {
+  checkBoardAndFillAiIndexesArray();
+  let differenceAIArray = aiSignIndexesArray.sort((a, b) => {
+    return b - a;
+  });
+  differenceAIArray = differenceAIArray.join("-");
+  differenceAIArray = eval(differenceAIArray);
+  console.log("difference: " + differenceAIArray);
+
+  // horizontally 6, 7, 8
+  if((differenceAIArray === 1 && aiSignIndexesArray[1] === 7) && sq_7.innerHTML === '') {
+    if(gameInfo.aiOption === false) {
+      sq_7.innerHTML = timesSign;
+      boardAreas[2][0] = 0;
+    } else {
+      sq_7.innerHTML = circleSign;
+      boardAreas[2][0] = 1;
+    }
+    return;
+  }
+  // horizontally 4, 5, 6
+  if((differenceAIArray === 1 && aiSignIndexesArray[1] === 4) && sq_4.innerHTML === '') {
+    if(gameInfo.aiOption === false) {
+      sq_4.innerHTML = timesSign;
+      boardAreas[1][0] = 0;
+    } else {
+      sq_4.innerHTML = circleSign;
+      boardAreas[1][0] = 1;
+    }
+    return;
+  }
+  // horizontally 1, 2, 3
+  if((differenceAIArray === 1 && aiSignIndexesArray[1] === 1) && sq_1.innerHTML === '') {
+    if(gameInfo.aiOption === false) {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+    } else {
+      sq_1.innerHTML = circleSign;
+      boardAreas[0][0] = 1;
+    }
+    return;
+  }
+  // vertically 1, 4, 7
+  if((differenceAIArray === 3 && aiSignIndexesArray[1] === 4) && sq_1.innerHTML === '') {
+    if(gameInfo.aiOption === false) {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+    } else {
+      sq_1.innerHTML = circleSign;
+      boardAreas[0][0] = 1;
+    }
+    return;
+  }
+  // vertically 2, 5, 8
+  if((differenceAIArray === 3 && aiSignIndexesArray[1] === 4) && sq_2.innerHTML === '') {
+    if(gameInfo.aiOption === false) {
+      sq_2.innerHTML = timesSign;
+      boardAreas[0][1] = 0;
+    } else {
+      sq_2.innerHTML = circleSign;
+      boardAreas[0][1] = 1;
+    }
+    return;
+  }
+  // vertically 3, 6, 9
+  if((differenceAIArray === 3 && aiSignIndexesArray[1] === 5) && sq_3.innerHTML === '') {
+    if(gameInfo.aiOption === false) {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+    } else {
+      sq_3.innerHTML = circleSign;
+      boardAreas[0][2] = 1;
+    }
+    return;
+  }
+  // diagonal 1, 5, 9
+  if((differenceAIArray === 4 && aiSignIndexesArray[0] === 9) && sq_1.innerHTML === '') {
+    if(gameInfo.aiOption === false) {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+    } else {
+      sq_1.innerHTML = circleSign;
+      boardAreas[0][0] = 1;
+    }
+    return;
+  }
+  // diagonal 7, 5, 3
+  if((differenceAIArray === 4 && aiSignIndexesArray[0] === 7) && sq_3.innerHTML === '') {
+    if(gameInfo.aiOption === false) {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+    } else {
+      sq_3.innerHTML = circleSign;
+      boardAreas[0][2] = 1;
+    }
+    return;
+  }
+}
+
 function moveAIXTurn4() {
   let difference = humanPlayerSignIndexesArray.sort((a, b) => {
     return b - a;
@@ -133,133 +232,259 @@ function moveAIXTurn4() {
   difference = eval(difference);
   console.log("difference: " + difference);
 
+  bestMoveAi();
+
   // diagonal circle on [3, 5] and [7, 5]
   if(difference === 2 && (humanPlayerSignIndexesArray[0] === 2 || humanPlayerSignIndexesArray[0] === 4)) {
-    sq_7.innerHTML = timesSign;
-    boardAreas[2][0] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_7.innerHTML = timesSign;
+      boardAreas[2][0] = 0;
+    } else {
+      sq_7.innerHTML = circleSign;
+      boardAreas[2][0] = 1;
+    }
   }
   else if(difference === 2 && (humanPlayerSignIndexesArray[0] === 2 || humanPlayerSignIndexesArray[0] === 6)) {
-    sq_3.innerHTML = timesSign;
-    boardAreas[0][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+    } else {
+      sq_3.innerHTML = circleSign;
+      boardAreas[0][2] = 1;
+    }
   }
 
   // diagonal circle on [1, 5] and [9, 5]
   else if(difference === 4 && (humanPlayerSignIndexesArray[0] === 0 || humanPlayerSignIndexesArray[0] === 4)) {
-    sq_9.innerHTML = timesSign;
-    boardAreas[2][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_9.innerHTML = timesSign;
+      boardAreas[2][2] = 0;
+    } else {
+      sq_9.innerHTML = circleSign;
+      boardAreas[2][2] = 1;
+    }
   }
   else if(difference === 4 && (humanPlayerSignIndexesArray[0] === 4 || humanPlayerSignIndexesArray[0] === 8)) {
-    sq_1.innerHTML = timesSign;
-    boardAreas[0][0] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+    } else {
+      sq_1.innerHTML = circleSign;
+      boardAreas[0][0] = 1;
+    }
   }
 
   // overhead circle on [1, 2] and [3, 2] first line
   else if(difference === 1 && (humanPlayerSignIndexesArray[0] === 0 || humanPlayerSignIndexesArray[0] === 1)) {
-    sq_3.innerHTML = timesSign;
-    boardAreas[0][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+    } else {
+      sq_3.innerHTML = circleSign;
+      boardAreas[0][2] = 1;
+    }
   }
   else if(difference === 1 && (humanPlayerSignIndexesArray[0] === 1 || humanPlayerSignIndexesArray[0] === 2)) {
-    sq_1.innerHTML = timesSign;
-    boardAreas[0][0] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+    } else {
+      sq_1.innerHTML = circleSign;
+      boardAreas[0][0] = 1;
+    }
   }
 
   // overhead circle on [4, 5] and [5, 4] second line
   else if(difference === 1 && (humanPlayerSignIndexesArray[0] === 3 || humanPlayerSignIndexesArray[0] === 4)) {
-    sq_6.innerHTML = timesSign;
-    boardAreas[1][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_6.innerHTML = timesSign;
+      boardAreas[1][2] = 0;
+    } else {
+      sq_6.innerHTML = circleSign;
+      boardAreas[1][2] = 1;
+    }
   }
   else if(difference === 1 && (humanPlayerSignIndexesArray[0] === 5 || humanPlayerSignIndexesArray[0] === 4)) {
-    sq_4.innerHTML = timesSign;
-    boardAreas[1][0] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_4.innerHTML = timesSign;
+      boardAreas[1][0] = 0;
+    } else {
+      sq_4.innerHTML = circleSign;
+      boardAreas[1][0] = 1;
+    }
   }
 
   // overhead circle on [7, 8] and [9, 8] third line
   else if(difference === 1 && (humanPlayerSignIndexesArray[0] === 6 || humanPlayerSignIndexesArray[0] === 7)) {
-    sq_9.innerHTML = timesSign;
-    boardAreas[2][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_9.innerHTML = timesSign;
+      boardAreas[2][2] = 0;
+    } else {
+      sq_9.innerHTML = circleSign;
+      boardAreas[2][2] = 1;
+    }
   }
   else if(difference === 1 && (humanPlayerSignIndexesArray[0] === 8 || humanPlayerSignIndexesArray[0] === 7)) {
-    sq_7.innerHTML = timesSign;
-    boardAreas[0][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_7.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+    } else {
+      sq_7.innerHTML = circleSign;
+      boardAreas[0][2] = 1;
+    }
   }
 
   // upright circle on [1, 4] and [7, 4] first column
   else if(difference === 3 && (humanPlayerSignIndexesArray[0] === 0 || humanPlayerSignIndexesArray[0] === 3)) {
-    sq_7.innerHTML = timesSign;
-    boardAreas[0][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_7.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+    } else {
+      sq_7.innerHTML = circleSign;
+      boardAreas[0][2] = 1;
+    }
   }
   else if(difference === 3 && (humanPlayerSignIndexesArray[0] === 6 || humanPlayerSignIndexesArray[0] === 3)) {
-    sq_1.innerHTML = timesSign;
-    boardAreas[0][0] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+    } else {
+      sq_1.innerHTML = circleSign;
+      boardAreas[0][0] = 1;
+    }
   }
 
   // upright circle on [2, 5] and [8, 5] second column
   else if(difference === 3 && (humanPlayerSignIndexesArray[0] === 1 || humanPlayerSignIndexesArray[0] === 4)) {
-    sq_8.innerHTML = timesSign;
-    boardAreas[2][1] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_8.innerHTML = timesSign;
+      boardAreas[2][1] = 0;
+    } else {
+      sq_8.innerHTML = circleSign;
+      boardAreas[2][1] = 1;
+    }
   }
   else if(difference === 3 && (humanPlayerSignIndexesArray[0] === 7 || humanPlayerSignIndexesArray[0] === 4)) {
-    sq_2.innerHTML = timesSign;
-    boardAreas[0][1] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_2.innerHTML = timesSign;
+      boardAreas[0][1] = 0;
+    } else {
+      sq_2.innerHTML = circleSign;
+      boardAreas[0][1] = 1;
+    }
   }
 
   // upright circle on [3, 6] and [9, 6] third column
   else if(difference === 3 && (humanPlayerSignIndexesArray[0] === 2 || humanPlayerSignIndexesArray[0] === 5)) {
-    sq_9.innerHTML = timesSign;
-    boardAreas[2][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_9.innerHTML = timesSign;
+      boardAreas[2][2] = 0;
+    } else {
+      sq_9.innerHTML = circleSign;
+      boardAreas[2][2] = 1;
+    }
   }
   else if(difference === 3 && (humanPlayerSignIndexesArray[0] === 8 || humanPlayerSignIndexesArray[0] === 5)) {
-    sq_3.innerHTML = timesSign;
-    boardAreas[0][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+    } else {
+      sq_3.innerHTML = circleSign;
+      boardAreas[0][2] = 1;
+    }
   }
 
   // sq_5 has cross and circles are on sq_2 & sq_4 || sq_2 & sq_6 || sq_4 & sq_8 || sq_8 & sq_6
   else if(difference === 2 || difference === 4) {
-    // difference === 2 ? sq_7.innerHTML = timesSign : sq_3.innerHTML = timesSign;
     if(difference === 2 && (humanPlayerSignIndexesArray.includes(3) || humanPlayerSignIndexesArray.includes(5))) {
-      sq_7.innerHTML = timesSign;
-      boardAreas[2][0] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_7.innerHTML = timesSign;
+        boardAreas[2][0] = 0;
+      } else {
+        sq_7.innerHTML = circleSign;
+        boardAreas[2][0] = 1;
+      }
     } else {
-      sq_3.innerHTML = timesSign;
-      boardAreas[0][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_3.innerHTML = timesSign;
+        boardAreas[0][2] = 0;
+      } else {
+        sq_3.innerHTML = circleSign;
+        boardAreas[0][2] = 1;
+      }
     }
   }
 
   // circles on sq_1 & sq_7 || sq_3 & sq_9
   else if(difference === 6) {
     if(humanPlayerSignIndexesArray.includes(0) || humanPlayerSignIndexesArray.includes(5)) {
-      sq_4.innerHTML = timesSign;
-      boardAreas[1][0] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_4.innerHTML = timesSign;
+        boardAreas[1][0] = 0;
+      } else {
+        sq_4.innerHTML = circleSign;
+        boardAreas[1][0] = 1;
+      }
     } else {
-      sq_6.innerHTML = timesSign;
-      boardAreas[1][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_6.innerHTML = timesSign;
+        boardAreas[1][2] = 0;
+      } else {
+        sq_6.innerHTML = circleSign;
+        boardAreas[1][2] = 1;
+      }
     }
+  }
+  else {
+    getRandomSquare();
   }
 }
 
 function checkBoardAndFillHumanIndexesArray() {
   humanPlayerSignIndexesArray = [];
 
-  if(boardAreas[0][0] === 1) {
-     humanPlayerSignIndexesArray.push(0);
-  } if(boardAreas[0][1] === 1) {
-    humanPlayerSignIndexesArray.push(1);
-  } if(boardAreas[0][2] === 1) {
-    humanPlayerSignIndexesArray.push(2);
-  } if(boardAreas[1][0] === 1) {
-    humanPlayerSignIndexesArray.push(3);
-  } if(boardAreas[1][1] === 1) {
-    humanPlayerSignIndexesArray.push(4);
-  } if(boardAreas[1][2] === 1) {
-    humanPlayerSignIndexesArray.push(5);
-  } if(boardAreas[2][0] === 1) {
-    humanPlayerSignIndexesArray.push(6);
-  } if(boardAreas[2][1] === 1) {
-    humanPlayerSignIndexesArray.push(7);
-  } if(boardAreas[2][2] === 1) {
-    humanPlayerSignIndexesArray.push(8);
+  if(gameInfo.firstPlayerOption === true) {
+    if(boardAreas[0][0] === 1) {
+      humanPlayerSignIndexesArray.push(0);
+   } if(boardAreas[0][1] === 1) {
+     humanPlayerSignIndexesArray.push(1);
+   } if(boardAreas[0][2] === 1) {
+     humanPlayerSignIndexesArray.push(2);
+   } if(boardAreas[1][0] === 1) {
+     humanPlayerSignIndexesArray.push(3);
+   } if(boardAreas[1][1] === 1) {
+     humanPlayerSignIndexesArray.push(4);
+   } if(boardAreas[1][2] === 1) {
+     humanPlayerSignIndexesArray.push(5);
+   } if(boardAreas[2][0] === 1) {
+     humanPlayerSignIndexesArray.push(6);
+   } if(boardAreas[2][1] === 1) {
+     humanPlayerSignIndexesArray.push(7);
+   } if(boardAreas[2][2] === 1) {
+     humanPlayerSignIndexesArray.push(8);
+   }
+  } else {
+    if(boardAreas[0][0] === 0) {
+      humanPlayerSignIndexesArray.push(0);
+   } if(boardAreas[0][1] === 0) {
+     humanPlayerSignIndexesArray.push(1);
+   } if(boardAreas[0][2] === 0) {
+     humanPlayerSignIndexesArray.push(2);
+   } if(boardAreas[1][0] === 0) {
+     humanPlayerSignIndexesArray.push(3);
+   } if(boardAreas[1][1] === 0) {
+     humanPlayerSignIndexesArray.push(4);
+   } if(boardAreas[1][2] === 0) {
+     humanPlayerSignIndexesArray.push(5);
+   } if(boardAreas[2][0] === 0) {
+     humanPlayerSignIndexesArray.push(6);
+   } if(boardAreas[2][1] === 0) {
+     humanPlayerSignIndexesArray.push(7);
+   } if(boardAreas[2][2] === 0) {
+     humanPlayerSignIndexesArray.push(8);
+   }
   }
-
+  
   // sort this values (b - a)
   humanPlayerSignIndexesArray.sort((a, b) => {
     return b - a;
@@ -269,26 +494,48 @@ function checkBoardAndFillHumanIndexesArray() {
 function checkBoardAndFillAiIndexesArray() {
   aiSignIndexesArray = [];
 
-  if(boardAreas[0][0] === 0) {
-    aiSignIndexesArray.push(0);
-  } if(boardAreas[0][1] === 0) {
-    aiSignIndexesArray.push(1);
-  } if(boardAreas[0][2] === 0) {
-    aiSignIndexesArray.push(2);
-  } if(boardAreas[1][0] === 0) {
-    aiSignIndexesArray.push(3);
-  } if(boardAreas[1][1] === 0) {
-    aiSignIndexesArray.push(4);
-  } if(boardAreas[1][2] === 0) {
-    aiSignIndexesArray.push(5);
-  } if(boardAreas[2][0] === 0) {
-    aiSignIndexesArray.push(6);
-  } if(boardAreas[2][1] === 0) {
-    aiSignIndexesArray.push(7);
-  } if(boardAreas[2][2] === 0) {
-    aiSignIndexesArray.push(8);
+  if(gameInfo.aiOption === false) {
+    if(boardAreas[0][0] === 0) {
+      aiSignIndexesArray.push(0);
+    } if(boardAreas[0][1] === 0) {
+      aiSignIndexesArray.push(1);
+    } if(boardAreas[0][2] === 0) {
+      aiSignIndexesArray.push(2);
+    } if(boardAreas[1][0] === 0) {
+      aiSignIndexesArray.push(3);
+    } if(boardAreas[1][1] === 0) {
+      aiSignIndexesArray.push(4);
+    } if(boardAreas[1][2] === 0) {
+      aiSignIndexesArray.push(5);
+    } if(boardAreas[2][0] === 0) {
+      aiSignIndexesArray.push(6);
+    } if(boardAreas[2][1] === 0) {
+      aiSignIndexesArray.push(7);
+    } if(boardAreas[2][2] === 0) {
+      aiSignIndexesArray.push(8);
+    }  
+  } else {
+    if(boardAreas[0][0] === 1) {
+      aiSignIndexesArray.push(0);
+    } if(boardAreas[0][1] === 1) {
+      aiSignIndexesArray.push(1);
+    } if(boardAreas[0][2] === 1) {
+      aiSignIndexesArray.push(2);
+    } if(boardAreas[1][0] === 1) {
+      aiSignIndexesArray.push(3);
+    } if(boardAreas[1][1] === 1) {
+      aiSignIndexesArray.push(4);
+    } if(boardAreas[1][2] === 1) {
+      aiSignIndexesArray.push(5);
+    } if(boardAreas[2][0] === 1) {
+      aiSignIndexesArray.push(6);
+    } if(boardAreas[2][1] === 1) {
+      aiSignIndexesArray.push(7);
+    } if(boardAreas[2][2] === 1) {
+      aiSignIndexesArray.push(8);
+    }  
   }
-
+  
   // sort this values (b - a)
   aiSignIndexesArray.sort((a, b) => {
     return b - a;
@@ -296,7 +543,7 @@ function checkBoardAndFillAiIndexesArray() {
 }
 
 function checkDangerForAIXIn3Turn() {
-  // poziomo
+  // horizontally
   if((humanPlayerSignIndexesArray[0] === 8 && humanPlayerSignIndexesArray[1] === 6) && sq_8.innerHTML === '') {
     gameInfo.dangerForAI = true;
   } 
@@ -306,257 +553,442 @@ function checkDangerForAIXIn3Turn() {
 }
 
 function cancelDangerForAIXIn3Turn() {
-  // dla sytuacji gdy kółko jest np. na polu 1 i 3 a pole 2 jest puste i mamy ruch AI
-  console.log("DANGER for AI-X !!!");
-  // poziomo
+  // for the situation when the circle is e.g. on boxes 1 and 3 and box 2 is empty and we have an AI move
+
+  // horizontally
   if((humanPlayerSignIndexesArray[0] === 8 && humanPlayerSignIndexesArray[1] === 6) && sq_8.innerHTML === '') {
-    sq_8.innerHTML = timesSign;
-    boardAreas[2][1] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_8.innerHTML = timesSign;
+      boardAreas[2][1] = 0;
+    } else {
+      sq_8.innerHTML = circleSign;
+      boardAreas[2][1] = 1;
+    }
     check();
     return;
   } 
   if(((humanPlayerSignIndexesArray[0] === 2 || humanPlayerSignIndexesArray[1] === 2) && (humanPlayerSignIndexesArray[1] === 0 || humanPlayerSignIndexesArray[2] === 0)) && sq_2.innerHTML === '') {
-    sq_2.innerHTML = timesSign;
-    boardAreas[0][1] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_2.innerHTML = timesSign;
+      boardAreas[0][1] = 0;
+    } else {
+      sq_2.innerHTML = circleSign;
+      boardAreas[0][1] = 1;
+    }
     check();
     return;
   }
-  // pionowo
+  // vertically
   if((humanPlayerSignIndexesArray[0] === 8 && (humanPlayerSignIndexesArray[1] === 2 || humanPlayerSignIndexesArray[2] === 2)) && sq_6.innerHTML === '') {
-    sq_6.innerHTML = timesSign;
-    boardAreas[1][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_6.innerHTML = timesSign;
+      boardAreas[1][2] = 0;
+    } else {
+      sq_6.innerHTML = circleSign;
+      boardAreas[1][2] = 1;
+    }
     check();
     return;
   } 
   if(((humanPlayerSignIndexesArray[0] === 6 || humanPlayerSignIndexesArray[1] === 6) && (humanPlayerSignIndexesArray[1] === 0 || humanPlayerSignIndexesArray[2] === 0)) && sq_4.innerHTML === '') {
-    sq_4.innerHTML = timesSign;
-    boardAreas[1][0] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_4.innerHTML = timesSign;
+      boardAreas[1][0] = 0;
+    } else {
+      sq_4.innerHTML = circleSign;
+      boardAreas[1][0] = 1;
+    }
     check();
     return;
   } 
-  // dla diagonali nie musimy sprawdzać, bo w 2 turze komp i tak zajmuje środek (pole 5) jeśli gracz nie zajął
   else {
-    console.log("NO DANGER 33333333")
     return;
   }
-  // gameInfo.nextOption = !gameInfo.nextOption
+}
+
+function getRandomSquare() {
+  if(boardAreas[0][0] === '') {
+    if(gameInfo.aiOption === false) {
+      sq_1.innerHTML = timesSign;
+      boardAreas[0][0] = 0;
+    } else {
+      sq_1.innerHTML = circleSign;
+      boardAreas[0][0] = 1;
+    }
+    return;
+  }
+  if(boardAreas[0][1] === '') {
+    if(gameInfo.aiOption === false) {
+      sq_2.innerHTML = timesSign;
+      boardAreas[0][1] = 0;
+    } else {
+      sq_2.innerHTML = circleSign;
+      boardAreas[0][1] = 1;
+    }
+    return;
+  }
+  if(boardAreas[0][2] === '') {
+    if(gameInfo.aiOption === false) {
+      sq_3.innerHTML = timesSign;
+      boardAreas[0][2] = 0;
+    } else {
+      sq_3.innerHTML = circleSign;
+      boardAreas[0][2] = 1;
+    }
+    return;
+  }
+  if(boardAreas[1][0] === '') {
+    if(gameInfo.aiOption === false) {
+      sq_4.innerHTML = timesSign;
+      boardAreas[1][0] = 0;
+    } else {
+      sq_4.innerHTML = circleSign;
+      boardAreas[1][0] = 1;
+    }
+    return;
+  }
+  if(boardAreas[1][1] === '') {
+    if(gameInfo.aiOption === false) {
+      sq_5.innerHTML = timesSign;
+      boardAreas[1][1] = 0;
+    } else {
+      sq_5.innerHTML = circleSign;
+      boardAreas[1][1] = 1;
+    }
+    return;
+  }
+  if(boardAreas[1][2] === '') {
+    if(gameInfo.aiOption === false) {
+      sq_6.innerHTML = timesSign;
+      boardAreas[1][2] = 0;
+    } else {
+      sq_6.innerHTML = circleSign;
+      boardAreas[1][2] = 1;
+    }
+    return;
+  }
+  if(boardAreas[2][0] === '') {
+    if(gameInfo.aiOption === false) {
+      sq_7.innerHTML = timesSign;
+      boardAreas[2][0] = 0;
+    } else {
+      sq_7.innerHTML = circleSign;
+      boardAreas[2][0] = 1;
+    }
+    return;
+  }
+  if(boardAreas[2][1] === '') {
+    if(gameInfo.aiOption === false) {
+      sq_8.innerHTML = timesSign;
+      boardAreas[2][1] = 0;
+    } else {
+      sq_8.innerHTML = circleSign;
+      boardAreas[2][1] = 1;
+    }
+    return;
+  }
+  if(boardAreas[2][2] === '') {
+    if(gameInfo.aiOption === false) {
+      sq_9.innerHTML = timesSign;
+      boardAreas[2][2] = 0;
+    } else {
+      sq_9.innerHTML = circleSign;
+      boardAreas[2][2] = 1;
+    }
+    return;
+  }
 }
 
 function moveAIXTurn6() {
-    console.log("HURAAAAAAAAAAAAAAAA")
-
   checkBoardAndFillHumanIndexesArray();
   checkBoardAndFillAiIndexesArray();
   console.log("human indexes: " + humanPlayerSignIndexesArray);
   console.log("ai indexes: " + aiSignIndexesArray);
 
-  // tutaj powinny być napisane warunki, żeby uruchomić funkcję cancelDangerForAIXIn3Turn lub jej nie uruchamiać
+  bestMoveAi();
 
-  // cancelDangerForAIXIn3Turn();
-  // dla sytuacji gdy kółko jest np. na polu 1 i 3 a pole 2 jest puste i mamy ruch AI
-
-  // SPRAWDZENIE DLA PUSTYCH PÓL POMIĘDZY
-  // poziomo
+  // horizontally
   if((humanPlayerSignIndexesArray[0] === 8 && humanPlayerSignIndexesArray[1] === 6) && sq_8.innerHTML === '') {
-    sq_8.innerHTML = timesSign;
-    boardAreas[2][1] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_8.innerHTML = timesSign;
+      boardAreas[2][1] = 0;
+    } else {
+      sq_8.innerHTML = circleSign;
+      boardAreas[2][1] = 1;
+    }
     check();
     return;
   } 
   if(((humanPlayerSignIndexesArray[0] === 2 || humanPlayerSignIndexesArray[1] === 2) && (humanPlayerSignIndexesArray[1] === 0 || humanPlayerSignIndexesArray[2] === 0)) && sq_2.innerHTML === '') {
-    sq_2.innerHTML = timesSign;
-    boardAreas[0][1] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_2.innerHTML = timesSign;
+      boardAreas[2][1] = 0;
+    } else {
+      sq_2.innerHTML = circleSign;
+      boardAreas[2][1] = 1;
+    }
     check();
     return;
   }
-  // pionowo
+  // horizontally
   if((humanPlayerSignIndexesArray[0] === 8 && (humanPlayerSignIndexesArray[1] === 2 || humanPlayerSignIndexesArray[2] === 2)) && sq_6.innerHTML === '') {
-    sq_6.innerHTML = timesSign;
-    boardAreas[1][2] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_6.innerHTML = timesSign;
+      boardAreas[1][2] = 0;
+    } else {
+      sq_6.innerHTML = circleSign;
+      boardAreas[1][2] = 1;
+    }
     check();
     return;
   } 
   if(((humanPlayerSignIndexesArray[0] === 6 || humanPlayerSignIndexesArray[1] === 6) && (humanPlayerSignIndexesArray[1] === 0 || humanPlayerSignIndexesArray[2] === 0)) && sq_4.innerHTML === '') {
-    sq_4.innerHTML = timesSign;
-    boardAreas[1][0] = 0;
+    if(gameInfo.aiOption === false) {
+      sq_4.innerHTML = timesSign;
+      boardAreas[1][0] = 0;
+    } else {
+      sq_4.innerHTML = circleSign;
+      boardAreas[1][0] = 1;
+    }
     check();
     return;
   } 
 
-  
-  // 0. jeśli komp ma już dwa krzyżyki po diagonalu lun indeksy dwóch obok siebie i ma turę i wolne miejsce, to niech postawi trzeci krzyżyk i wygra
-
-  // 1. tutaj trzeba już sprawdzać czy te 3 liczby (3 Kółka) w tablicy mają indeksy obok siebie np. 4, 0, 1. Jeśli tak to postawić tam krzyżyk, który przeszkodzi wygranej. 
-  
-  // 2. A jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu.
-
-
-  // obok siebie poziomo - różnica 1
+  // horizontally - difference 1
   if(((Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[1]) === 1) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[1]) === 1)) || (Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[2]) === 1)) {
-    console.log("POZIOMO");
 
-    // !!!!! jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu i WYGRAĆ !!!!
-    // ta funkcja powinna znaleźć się zaraz na początku TUTAJ !!!!
-
-    //ogólnie jeśli nie ma zagrożenia to trzeba coś zrobić innego z krzyżykiem
     if(humanPlayerSignIndexesArray[1] === 1 && sq_1.innerHTML === '') {
-      sq_1.innerHTML = timesSign;
-      boardAreas[0][0] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_1.innerHTML = timesSign;
+        boardAreas[0][0] = 0;
+      } else {
+        sq_1.innerHTML = circleSign;
+        boardAreas[0][0] = 1;
+      }
       return;
-    } if(humanPlayerSignIndexesArray[1] === 2) {
-      // ten warunek jest z dupy bo kółka są na 3 i 4
     } if((humanPlayerSignIndexesArray[1] === 3 || (humanPlayerSignIndexesArray[2] === 3 && humanPlayerSignIndexesArray[1] === 4)) && sq_6.innerHTML === '') {
-      sq_6.innerHTML = timesSign;
-      boardAreas[1][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_6.innerHTML = timesSign;
+        boardAreas[1][2] = 0;
+      } else {
+        sq_6.innerHTML = circleSign;
+        boardAreas[1][2] = 1;
+      }
       return;
     } if(((humanPlayerSignIndexesArray[1] === 4 && sq_4.innerHTML === '') || (humanPlayerSignIndexesArray[2] === 4 && humanPlayerSignIndexesArray[1] === 5)) && sq_4.innerHTML === '') {
-      sq_4.innerHTML = timesSign;
-      boardAreas[1][0] = 0;
-      return;
-    } if(humanPlayerSignIndexesArray[1] === 5 && sq_4.innerHTML === '') {
-      // ten warunek jest z dupy bo kółka są na 6 i 7
+      if(gameInfo.aiOption === false) {
+        sq_4.innerHTML = timesSign;
+        boardAreas[1][0] = 0;
+      } else {
+        sq_4.innerHTML = circleSign;
+        boardAreas[1][0] = 1;
+      }
       return;
     } if(humanPlayerSignIndexesArray[1] === 6 && sq_9.innerHTML === '') {
-      sq_9.innerHTML = timesSign;
-      boardAreas[2][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_9.innerHTML = timesSign;
+        boardAreas[2][2] = 0;
+      } else {
+        sq_9.innerHTML = circleSign;
+        boardAreas[2][2] = 1;
+      }
       return;
     } if(humanPlayerSignIndexesArray[1] === 7 && sq_7.innerHTML === '') {
-      sq_7.innerHTML = timesSign;
-      boardAreas[2][0] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_7.innerHTML = timesSign;
+        boardAreas[2][0] = 0;
+      } else {
+        sq_7.innerHTML = circleSign;
+        boardAreas[2][0] = 1;
+      }
       return;
     } if((humanPlayerSignIndexesArray[0] === 7 && humanPlayerSignIndexesArray[2] === 4) && sq_3.innerHTML === '') {
-      sq_3.innerHTML = timesSign;
-      boardAreas[0][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_3.innerHTML = timesSign;
+        boardAreas[0][2] = 0;
+      } else {
+        sq_3.innerHTML = circleSign;
+        boardAreas[0][2] = 1;
+      }
       return;
     } if((humanPlayerSignIndexesArray[0] === 8 && boardAreas[1][1] === 1) && sq_2.innerHTML === '') {
       if(sq_2.innerHTML === '') {
-        sq_2.innerHTML = timesSign;
-        boardAreas[0][1] = 0;
+        if(gameInfo.aiOption === false) {
+          sq_2.innerHTML = timesSign;
+          boardAreas[0][1] = 0;
+        } else {
+          sq_2.innerHTML = circleSign;
+          boardAreas[0][1] = 1;
+        }
         return;
       } else {
-        sq_3.innerHTML = timesSign;
-        boardAreas[0][2] = 0;
+        if(gameInfo.aiOption === false) {
+          sq_3.innerHTML = timesSign;
+          boardAreas[0][2] = 0;
+        } else {
+          sq_3.innerHTML = circleSign;
+          boardAreas[0][2] = 1;
+        }
         return;
       }
     } 
     check();
   }
 
-  // pionowo
+  // vertically
   if(((Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[1]) === 3) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[1]) === 3)) || (Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[2]) === 3)) {
 
-    console.log("PIONOWO");
-
-    // !!!!! jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu i WYGRAĆ !!!!
-    // ta funkcja powinna znaleźć się zaraz na początku TUTAJ !!!!
-
-    // sprawdzamy tylko drugi element tablicy np. pole 4. Skoro jest drugie to znaczy, że pierwsze jest pole 7, bo sortowaliśmy tablicę i można zablokować pole sq_2.
     if(((humanPlayerSignIndexesArray[1] === 3 || (humanPlayerSignIndexesArray[2] === 3 && humanPlayerSignIndexesArray[0] === 6)) || (humanPlayerSignIndexesArray[2] === 3 && humanPlayerSignIndexesArray[1] === 6)) && sq_1.innerHTML === '') {
-      sq_1.innerHTML = timesSign;
-      boardAreas[0][0] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_1.innerHTML = timesSign;
+        boardAreas[0][0] = 0;
+      } else {
+        sq_1.innerHTML = circleSign;
+        boardAreas[0][0] = 1;
+      }
       return;
     }
      if(((humanPlayerSignIndexesArray[0] === 4 || humanPlayerSignIndexesArray[1] === 4) && (humanPlayerSignIndexesArray[0] > 4 || (aiSignIndexesArray[0] === 3 || aiSignIndexesArray[1] === 3 || aiSignIndexesArray[2] === 3))) && sq_8.innerHTML === '') {
-      sq_8.innerHTML = timesSign;
-      boardAreas[2][1] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_8.innerHTML = timesSign;
+        boardAreas[2][1] = 0;
+      } else {
+        sq_8.innerHTML = circleSign;
+        boardAreas[2][1] = 1;
+      }
       return;
     }
     
     if(((humanPlayerSignIndexesArray[2] === 4 || humanPlayerSignIndexesArray[1] === 4) && (humanPlayerSignIndexesArray[1] === 7 || humanPlayerSignIndexesArray[0] === 7))  && sq_2.innerHTML === '') {
-      sq_2.innerHTML = timesSign;
-      boardAreas[0][1] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_2.innerHTML = timesSign;
+        boardAreas[0][1] = 0;
+      } else {
+        sq_2.innerHTML = circleSign;
+        boardAreas[0][1] = 1;
+      }
       return;
     }
     if(((humanPlayerSignIndexesArray[0] === 4 && humanPlayerSignIndexesArray[1] === 1) && sq_8.innerHTML === '')) {
-      sq_8.innerHTML = timesSign;
-      boardAreas[0][1] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_8.innerHTML = timesSign;
+        boardAreas[0][1] = 0;
+      } else {
+        sq_8.innerHTML = circleSign;
+        boardAreas[0][1] = 1;
+      }
       return;
     }
     if((((humanPlayerSignIndexesArray[1] === 5 || humanPlayerSignIndexesArray[2] === 5 || humanPlayerSignIndexesArray[0] === 5) && humanPlayerSignIndexesArray[0] === 8)) && sq_3.innerHTML === '') {
-      sq_3.innerHTML = timesSign;
-      boardAreas[0][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_3.innerHTML = timesSign;
+        boardAreas[0][2] = 0;
+      } else {
+        sq_3.innerHTML = circleSign;
+        boardAreas[0][2] = 1;
+      }
       return;
     } if((((humanPlayerSignIndexesArray[0] === 5 || humanPlayerSignIndexesArray[1] === 5) && (humanPlayerSignIndexesArray[1] === 2 || humanPlayerSignIndexesArray[2] === 2))) && sq_9.innerHTML === '') {
-      sq_9.innerHTML = timesSign;
-      boardAreas[0][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_9.innerHTML = timesSign;
+        boardAreas[0][2] = 0;
+      } else {
+        sq_9.innerHTML = circleSign;
+        boardAreas[0][2] = 1;
+      }
       return;
     }
     check();
   }
 
-  // // skos 7, 5, 3
+  // diagonal 7, 5, 3
   if((Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[1]) === 2) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[1]) === 2) || (Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[2]) === 2)) {
 
-    console.log("SKOS 7, 5, 3");
-
-    // !!!!! jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu i WYGRAĆ !!!!
-    //   ta funkcja powinna znaleźć się zaraz na początku TUTAJ !!!!
-
     if(((humanPlayerSignIndexesArray[0] === 4 || humanPlayerSignIndexesArray[1] === 4 || humanPlayerSignIndexesArray[2] === 4) && (humanPlayerSignIndexesArray[0] === 6 || humanPlayerSignIndexesArray[1] === 6)) && sq_3.innerHTML === '') {
-      sq_3.innerHTML = timesSign;
-      boardAreas[0][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_3.innerHTML = timesSign;
+        boardAreas[0][2] = 0;
+      } else {
+        sq_3.innerHTML = circleSign;
+        boardAreas[0][2] = 1;
+      }
       return;
     }
     if(humanPlayerSignIndexesArray[1] === 4 && sq_3.innerHTML === '') {
-      sq_3.innerHTML = timesSign;
-      boardAreas[0][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_3.innerHTML = timesSign;
+        boardAreas[0][2] = 0;
+      } else {
+        sq_3.innerHTML = circleSign;
+        boardAreas[0][2] = 1;
+      }
       return;
     }
     if(((humanPlayerSignIndexesArray[0] === 4 || humanPlayerSignIndexesArray[1] === 4) && (humanPlayerSignIndexesArray[1] === 2 || humanPlayerSignIndexesArray[2] === 2)) && sq_7.innerHTML === '') {
-      sq_7.innerHTML = timesSign;
-      boardAreas[2][0] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_7.innerHTML = timesSign;
+        boardAreas[0][2] = 0;
+      } else {
+        sq_7.innerHTML = circleSign;
+        boardAreas[0][2] = 1;
+      }
       return;
     }
     check();
   }
 
-  // // skos 1, 5, 9
+  // diagonal 1, 5, 9
   if(((Math.abs(humanPlayerSignIndexesArray[0] - humanPlayerSignIndexesArray[1]) === 4) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[1]) === 4)) || (Math.abs(humanPlayerSignIndexesArray[2] - humanPlayerSignIndexesArray[0]) === 4)) {
 
-    console.log('skos 1, 5, 9');
-  // !!!!! jeśli nie ma takich indeksów obok siebie to postawić tam krzyżyk gdzie są dwa krzyżyki z indeksami obok siebie albo po diagonalu i WYGRAĆ !!!!
-  // ta funkcja powinna znaleźć się zaraz na początku TUTAJ !!!!
-
     if(humanPlayerSignIndexesArray[1] === 4 && sq_1.innerHTML === '') {
-      sq_1.innerHTML = timesSign;
-      boardAreas[0][0] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_1.innerHTML = timesSign;
+        boardAreas[0][0] = 0;
+      } else {
+        sq_1.innerHTML = circleSign;
+        boardAreas[0][0] = 1;
+      }
       check();
       return;
     } else {
-      sq_9.innerHTML = timesSign;
-      boardAreas[2][2] = 0;
+      if(gameInfo.aiOption === false) {
+        sq_9.innerHTML = timesSign;
+        boardAreas[2][2] = 0;
+      } else {
+        sq_9.innerHTML = circleSign;
+        boardAreas[2][2] = 1;
+      }
       check();
       return;
     }
   }
-  
-  console.log(boardAreas);
+  else {
+    getRandomSquare();
+  }
 }
 
 function moveAIXTurn2() {
-  // SECOND TURN
   if(gameInfo.nextOption === false && gameInfo.turn === 1) {
     // board is blocked for 500ms
     bgcDisabled.style.display = 'block';
-    if(sq_5.innerHTML === `<i class="far fa-circle icon option-circle"></i>`) {
-      // wybierz losowo z pól  0, 1, 2, 3, 5, 6, 7, 8, 9 i postaw na jednym z tych pól krzyżyk
+    if(sq_5.innerHTML === circleSign) {
       let randomIndexOfSquare = Math.floor(Math.random() * squaresArray.length);
       if(randomIndexOfSquare < 0 || randomIndexOfSquare === 4) {
         randomIndexOfSquare = Math.floor(Math.random() * squaresArray.length);
         if(randomIndexOfSquare === 4) {
-          sq_7.innerHTML = `<i class="fas fa-times icon option-times"></i>`;
+          sq_7.innerHTML = timesSign;
         }
       }
       fillBoardAreasAfterAIMovement(randomIndexOfSquare);
       setTimeout(() => {
-      squaresArray[randomIndexOfSquare].innerHTML = `<i class="fas fa-times icon option-times"></i>`;
+      squaresArray[randomIndexOfSquare].innerHTML = timesSign;
       gameInfo.turn++;
       bgcDisabled.style.display = 'none';
       check();
       }, 500)
     } else {
       setTimeout(() => {
-        sq_5.innerHTML = `<i class="fas fa-times icon option-times"></i>`;
+        sq_5.innerHTML = timesSign;
         boardAreas[1][1] = 0;
         instruction.innerHTML = `<p><span class="info-name">YOUR</span> turn:</p>`;
         gameInfo.turn++;
@@ -566,18 +998,32 @@ function moveAIXTurn2() {
     }
   }
 
-  // znajdź wszystkie kółka i przekaż ich indeksy do tablicy humanPlayerSignIndexesArray. Zrób to w 3 turze.
   squaresArray.forEach(sq => {
-    if((sq.innerHTML === `<i class="far fa-circle icon option-circle"></i>`) && gameInfo.turn === 3) {
-      console.log(squaresArray.indexOf(sq)) // DZIAŁA !!!! :)
+    if((sq.innerHTML === circleSign) && gameInfo.turn === 3) {
+      console.log(squaresArray.indexOf(sq))
       const indexOfHumanSign = squaresArray.indexOf(sq);
       humanPlayerSignIndexesArray.push(indexOfHumanSign);
     } 
   })
-  
-  // gameInfo.turn += 1;
-  console.log(humanPlayerSignIndexesArray);
 }
+
+function moveAIOTurn1() {
+  // SECOND TURN
+  if(gameInfo.nextOption === true && gameInfo.turn === 0) {
+    // board is blocked for 500ms
+    bgcDisabled.style.display = 'block';
+    setTimeout(() => {
+      sq_5.innerHTML = circleSign;
+      boardAreas[1][1] = 1;
+      instruction.innerHTML = `<p><span class="info-name">YOUR</span> turn:</p>`;
+      gameInfo.turn++;
+      bgcDisabled.style.display = 'none';
+      check();
+    }, 500);
+  }
+}
+
+
 
 function playWithAI() {
   if(gameInfo.isWinner === true || gameInfo.isWinner === false && gameInfo.turn === 9) {
@@ -585,6 +1031,9 @@ function playWithAI() {
     gameInfo.turn = 0;
     return;
   } else {
+
+    gameInfo.aiOption === true ? moveAIOTurn1() : null;
+
     squares.forEach(square => {
       square.addEventListener('click', function(event) {
         const { row, column } = event.target.dataset;
@@ -594,22 +1043,19 @@ function playWithAI() {
           return;
         }
 
-        // jeśli player ma kółko i AI ma krzyżyk i WŁAŚNIE KLIKA  PLAYER!!!!!!!!
         else if(gameInfo.firstPlayerOption === true) {
           gameInfo.nextOption = !gameInfo.nextOption;
           boardAreas[row][column] = 1;
-          square.innerHTML = `<i class="far fa-circle icon option-circle"></i>`;
+          square.innerHTML = circleSign;
           instruction.innerHTML = `<p><span class="info-name">AI's</span> turn:</p>`;
           gameInfo.turn++;
           
-
           moveAIXTurn2();
           if(gameInfo.turn === 3) {
             moveAIXTurn4();
-            // gameInfo.turn++;
           }
           else if(gameInfo.turn === 4) {
-            gameInfo.turn++; // turn 5
+            gameInfo.turn++;
             moveAIXTurn6();
             
           }
@@ -629,18 +1075,36 @@ function playWithAI() {
           console.log(boardAreas[1]);
           console.log(boardAreas[2]);
         }
-        // jeśli player ma krzyżyk i AI ma kółko i WŁAŚNIE KLIKA  PLAYER!!!!!!!!
         else if(gameInfo.firstPlayerOption === false) {
           gameInfo.nextOption = !gameInfo.nextOption;
-          square.innerHTML = `<i class="far fa-circle icon option-times"></i>`;
+          square.innerHTML = timesSign;
           instruction.innerHTML = `<p><span class="info-name">AI's</span> turn:</p>`;
           boardAreas[row][column] = 0;
           gameInfo.turn++;
-          check();
+          moveAIOTurn1();
+          if(gameInfo.turn === 2) {
+            gameInfo.turn++;
+            moveAIXTurn4();
+          }
+          if(gameInfo.turn === 4) {
+            gameInfo.turn++;
+            moveAIXTurn6();
+            
+          }
+          else if(gameInfo.turn === 6) {
+            gameInfo.turn++;
+            moveAIXTurn6();
+          }
+          else if(gameInfo.turn === 8) {
+            gameInfo.turn++;
+            moveAIXTurn6();
+          }
 
-          checkPositionsAndMoveAI();
-          moveAIXTurn2();
+          check();
           showGameInfo();
+          console.log(boardAreas[0]);
+          console.log(boardAreas[1]);
+          console.log(boardAreas[2]);
         }
       })
     })
@@ -770,7 +1234,7 @@ function play() {
         } else if(gameInfo.firstPlayerOption === true) {
           if(gameInfo.nextOption === true) {
             gameInfo.nextOption = !gameInfo.nextOption;
-            square.innerHTML = `<i class="far fa-circle icon option-circle"></i>`;
+            square.innerHTML = circleSign;
             instruction.innerHTML = `<p><span class="info-name">${gameInfo.secondPlayerName}</span> turn:</p>`;
             boardAreas[row][column] = 1;
             gameInfo.turn++;
@@ -778,7 +1242,7 @@ function play() {
             showGameInfo();
           } else {
             gameInfo.nextOption = !gameInfo.nextOption;
-            square.innerHTML = `<i class="fas fa-times icon option-times"></i>`;
+            square.innerHTML = timesSign;
             instruction.innerHTML = `<p><span class="info-name">${gameInfo.firstPlayerName}</span> turn:</p>`;
             boardAreas[row][column] = 0;
             gameInfo.turn++;
@@ -788,7 +1252,7 @@ function play() {
         } else if(gameInfo.firstPlayerOption === false) {
           if(gameInfo.nextOption === true) {
             gameInfo.nextOption = !gameInfo.nextOption;
-            square.innerHTML = `<i class="far fa-circle icon option-circle"></i>`;
+            square.innerHTML = circleSign;
             instruction.innerHTML = `<p><span class="info-name">${gameInfo.firstPlayerName}</span> turn:</p>`;
             boardAreas[row][column] = 1;
             gameInfo.turn++;
@@ -796,7 +1260,7 @@ function play() {
             showGameInfo();
           } else {
             gameInfo.nextOption = !gameInfo.nextOption;
-            square.innerHTML = `<i class="fas fa-times icon option-times"></i>`;
+            square.innerHTML = timesSign;
             instruction.innerHTML = `<p><span class="info-name">${gameInfo.secondPlayerName}</span> turn:</p>`;
             boardAreas[row][column] = 0;
             gameInfo.turn++;
