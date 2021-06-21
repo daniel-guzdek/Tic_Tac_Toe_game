@@ -13,11 +13,13 @@
     font-family: $font-family_1;
     color: $color_1;
     font-size: 80px;
+    width: 100%;
+    text-align: center;
     @media (max-width: 680px) {
-      font-size: 60px;
+      font-size: 50px;
     }
     @media (max-width: 480px) {
-      font-size: 50px;
+      font-size: 40px;
     }
   }
   .info {
@@ -32,6 +34,9 @@
     color: $color_2;
     text-align: center;
     font-size: 24px;
+    @media (max-width: 480px) {
+      font-size: 18px;
+    }
     .info-name {
       font-size: 30px;
       font-weight: bold;
@@ -91,6 +96,11 @@
           &:focus {
             outline: none;
           }
+          @media (max-width: 480px) {
+            display: inline-block;
+            margin: 0 2%;
+            width: 95%;
+          }
         }
         .fa-check {
           @include icon;
@@ -127,6 +137,10 @@
     margin: 30px auto;
     background-color: lighten($color: $bgcolor, $amount: 10%);
     border: 1px double $color_3;
+    @media (max-width: 280px) {
+      width: 240px;
+      height: 240px;
+    }
     .bgc-disabled {
       display: none;
       position: absolute;

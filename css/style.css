@@ -32,17 +32,19 @@ body {
   font-family: "Monofett", cursive;
   color: #fbdb49;
   font-size: 80px;
+  width: 100%;
+  text-align: center;
 }
 
 @media (max-width: 680px) {
   .wrapper .main-title {
-    font-size: 60px;
+    font-size: 50px;
   }
 }
 
 @media (max-width: 480px) {
   .wrapper .main-title {
-    font-size: 50px;
+    font-size: 40px;
   }
 }
 
@@ -59,6 +61,12 @@ body {
   color: #f88d6c;
   text-align: center;
   font-size: 24px;
+}
+
+@media (max-width: 480px) {
+  .wrapper .instruction {
+    font-size: 18px;
+  }
 }
 
 .wrapper .instruction .info-name {
@@ -164,6 +172,14 @@ body {
   outline: none;
 }
 
+@media (max-width: 480px) {
+  .wrapper .options-wrapper .inputs-wrapper .input-group .input-name {
+    display: inline-block;
+    margin: 0 2%;
+    width: 95%;
+  }
+}
+
 .wrapper .options-wrapper .inputs-wrapper .input-group .fa-check {
   font-size: 50px;
   margin: 50px 0;
@@ -227,6 +243,13 @@ body {
   margin: 30px auto;
   background-color: #3e3e3e;
   border: 1px double #fff3b0;
+}
+
+@media (max-width: 280px) {
+  .wrapper .board {
+    width: 240px;
+    height: 240px;
+  }
 }
 
 .wrapper .board .bgc-disabled {
