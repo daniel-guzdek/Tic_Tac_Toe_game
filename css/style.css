@@ -61,6 +61,7 @@ body {
   color: #f88d6c;
   text-align: center;
   font-size: 24px;
+  height: 40px;
 }
 
 @media (max-width: 480px) {
