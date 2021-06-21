@@ -167,11 +167,11 @@ function check() {
 }
 
 function infoNextAIOrSecondPlayer() {
-  gameInfo.opponentIsHuman ? instruction.innerHTML = `<p><span class="info-name">${gameInfo.secondPlayerName}</span>'s turn:</p>` : instruction.innerHTML = `<p><span class="info-name">AI's</span> turn:</p>`;
+  gameInfo.opponentIsHuman ? instruction.innerHTML = `<p><span class="info-name">${gameInfo.secondPlayerName}</span>'s turn:</p>` : instruction.innerHTML = ``;
 }
 
 function infoNextFirstPlayer() {
-  gameInfo.opponentIsHuman ? instruction.innerHTML = `<p><span class="info-name">${gameInfo.firstPlayerName}</span>'s turn:</p>` : instruction.innerHTML = `<p><span class="info-name">Your</span> turn:</p>`;
+  gameInfo.opponentIsHuman ? instruction.innerHTML = `<p><span class="info-name">${gameInfo.firstPlayerName}</span>'s turn:</p>` : instruction.innerHTML = ``;
 }
 
 function aiTakeOrTryTakeMiddleSquare() {
@@ -480,7 +480,7 @@ function checkForDanger() {
     return;
   }
 
-  // // check horizontal (4, 5, 6)
+  // check horizontal (4, 5, 6)
   if((humanPlayerSignIndexesArray.includes(3) && humanPlayerSignIndexesArray.includes(4)) && squares[5].innerHTML === '') {
     gameInfo.dangerForAI = true;
     return;
@@ -494,7 +494,7 @@ function checkForDanger() {
     return;
   }
 
-  // // check horizontal (7, 8, 9)
+  // check horizontal (7, 8, 9)
   if((humanPlayerSignIndexesArray.includes(6) && humanPlayerSignIndexesArray.includes(7)) && squares[8].innerHTML === '') {
     gameInfo.dangerForAI = true;
     return;
@@ -508,7 +508,7 @@ function checkForDanger() {
     return;
   }
 
-  // // check vertically (1, 4, 7)
+  // check vertically (1, 4, 7)
   if((humanPlayerSignIndexesArray.includes(0) && humanPlayerSignIndexesArray.includes(3)) && squares[6].innerHTML === '') {
     gameInfo.dangerForAI = true;
     return;
